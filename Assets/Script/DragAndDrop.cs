@@ -5,6 +5,7 @@ using UnityEngine;
 public class DragAndDrop : MonoBehaviour
 {
     public GameObject selectedPiece;
+    private Vector3 position;
     public List<GameObject> puzzle = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
@@ -12,8 +13,17 @@ public class DragAndDrop : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+	public void Init()
+	{
+		foreach (var piece in puzzle)
+		{
+            piece.transform.GetComponent<PiecesPosition>().Init();
+        
+           
+        }
+	}
+	// Update is called once per frame
+	void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -23,14 +33,13 @@ public class DragAndDrop : MonoBehaviour
                 {
 
                     selectedPiece = hit.transform.gameObject;
-
-
+                    position = selectedPiece.transform.position;
                 }
             }
             
         }
         //Drag
-        if (selectedPiece != null)
+        if (selectedPiece != null && !selectedPiece.GetComponent<PiecesPosition>().inRightPosition)
         {
             Vector3 MousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             selectedPiece.transform.position = new Vector3(MousePoint.x, MousePoint.y, 0);
@@ -43,6 +52,12 @@ public class DragAndDrop : MonoBehaviour
                 {
                     selectedPiece = null;
                 }
+                else
+                {
+                    selectedPiece.transform.position = position;
+                    //selectedPiece.transform.GetComponent<PiecesPosition>().Init();
+                    selectedPiece = null;
+                }
             }
             
         }
@@ -50,16 +65,22 @@ public class DragAndDrop : MonoBehaviour
         int number = 0;
         foreach (var piece in puzzle)
         {
-            if (piece.transform.GetComponent<PiecesPosition>().inRightPosition)
+            if (piece.transform.GetComponent<PiecesPosition>().inRightPosition && !selectedPiece)
             {
                 number++;
+                GameUI.instance.IncrementProgress(10);
+                
             }
 
             index++;
         }
-        if (number == 10)
+        if (number == 10 && !selectedPiece)
         {
-            GameUI.instance.ShowWinUI();
+			foreach (var piece in puzzle)
+			{
+                piece.GetComponent<PiecesPosition>().inRightPosition = false;
+			}
+            GameManager.instance.Win();
         }
 
     }

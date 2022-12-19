@@ -9,15 +9,18 @@ public class PiecesPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rightPosition = transform.position;
-        transform.position = new Vector3(Random.Range(-9, 8), Random.Range(-1, -16), 0);
-        
+        rightPosition = transform.position;        
     }
+    public void Init()
+	{
+        transform.position = new Vector3(Random.Range(-9, 8), Random.Range(-1, -16), 0);
+    }
+  
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, rightPosition)<0.4)
+        if (Vector3.Distance(transform.position, rightPosition)<0.4 && !inRightPosition && GameManager.instance.isInGame)
         {
             transform.position = rightPosition;
             inRightPosition = true;
