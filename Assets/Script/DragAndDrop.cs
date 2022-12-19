@@ -5,6 +5,7 @@ using UnityEngine;
 public class DragAndDrop : MonoBehaviour
 {
     public GameObject selectedPiece;
+    public List<GameObject> puzzle = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +18,16 @@ public class DragAndDrop : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            if (hit.transform.CompareTag("Puzzle"))
-            {
-                
+            if (hit) {
+                if (hit.transform.CompareTag("Puzzle"))
+                {
+
                     selectedPiece = hit.transform.gameObject;
-                
-                
+
+
+                }
             }
+            
         }
         //Drag
         if (selectedPiece != null)
@@ -34,11 +38,29 @@ public class DragAndDrop : MonoBehaviour
         //Drop 
         if (Input.GetMouseButtonUp(0))
         {
-            if (selectedPiece.transform.GetComponent<PiecesPosition>().inRightPosition)
-            {
-                selectedPiece = null;
+            if (selectedPiece) {
+                if (selectedPiece.transform.GetComponent<PiecesPosition>().inRightPosition)
+                {
+                    selectedPiece = null;
+                }
             }
+            
         }
-        
+        int index = 0;
+        int number = 0;
+        foreach (var piece in puzzle)
+        {
+            if (piece.transform.GetComponent<PiecesPosition>().inRightPosition)
+            {
+                number++;
+            }
+
+            index++;
+        }
+        if (number == 10)
+        {
+            GameUI.instance.ShowWinUI();
+        }
+
     }
 }

@@ -10,7 +10,7 @@ public class PiecesPosition : MonoBehaviour
     void Start()
     {
         rightPosition = transform.position;
-        transform.position = new Vector3(Random.Range(-9, 8), Random.Range(-1, -16));
+        transform.position = new Vector3(Random.Range(-9, 8), Random.Range(-1, -16), 0);
         
     }
 
@@ -24,5 +24,9 @@ public class PiecesPosition : MonoBehaviour
 
         }
         
+
+
+
     }
+    
 }
