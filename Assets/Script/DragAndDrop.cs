@@ -67,9 +67,8 @@ public class DragAndDrop : MonoBehaviour
         {
             if (piece.transform.GetComponent<PiecesPosition>().inRightPosition && !selectedPiece)
             {
+                GameUI.instance.SetProgress(number/10f);
                 number++;
-                GameUI.instance.IncrementProgress(10);
-                
             }
 
             index++;
@@ -81,6 +80,14 @@ public class DragAndDrop : MonoBehaviour
                 piece.GetComponent<PiecesPosition>().inRightPosition = false;
 			}
             GameManager.instance.Win();
+        }
+        if (GameManager.instance.isInGame)
+		{
+            foreach (var piece in puzzle)
+            {
+                piece.GetComponent<PiecesPosition>().inRightPosition = false;
+            }
+
         }
 
     }

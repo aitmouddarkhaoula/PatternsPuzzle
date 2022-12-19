@@ -9,20 +9,21 @@ public class GameUI : MonoBehaviour
     public GameObject homeUI;
     public GameObject inGameUI;
     public GameObject winUI;
-    private Slider slider;
-    private float targetProgress = 0;
+    public Image slider;
+   //private float targetProgress = 0;
     public float fillSpeed = 0.5f;
-    // Start is called before the first frame update
+    public Text progress;
+    //Start is called before the first frame update
     private void Awake()
     {
-        slider = gameObject.GetComponent<Slider>();
+    
         instance = this;
     }
-    
+
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class GameUI : MonoBehaviour
 		{
             slider.value += fillSpeed * Time.deltaTime;
 		}*/
-        
+
     }
     public void ShowHomeUI()
     {
@@ -52,9 +53,10 @@ public class GameUI : MonoBehaviour
         winUI.SetActive(true);
         inGameUI.SetActive(false);
     }
-    public void IncrementProgress(float newProgress)
-	{
-        //targetProgress = slider.value + newProgress; 
-	}
+    public void SetProgress(float newProgress)
+    {
+        slider.fillAmount=newProgress;
+        progress.text = newProgress*100 + "%";
+
+    }
 }
- 

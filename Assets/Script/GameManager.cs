@@ -5,17 +5,17 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager instance;
+	public static GameManager instance;
 
-    bool _gameWin = false;
+	bool _gameWin = false;
 	void Awake()
 	{
-        instance = this;
+		instance = this;
 	}
 	void Start()
-    {
+	{
 		isInGame = _gameWin = false;
-    }
+	}
 
 	// Update is called once per frame
 	public void Init()
@@ -28,26 +28,26 @@ public class GameManager : MonoBehaviour
 	{
 		if (!_gameWin)
 		{
-		   GameUI.instance.ShowWinUI();
+			GameUI.instance.ShowWinUI();
 			_gameWin = true;
 			isInGame = false;
 		}
 	}
 
-    public void StartGame(bool active)
+	public void StartGame(bool active)
 	{
-        isInGame = active;
+		isInGame = active;
 		if (active)
 		{
-            GameUI.instance.ShowInGameUI();
+			GameUI.instance.ShowInGameUI();
 		}
 		else
 		{
-            GameUI.instance.ShowHomeUI();
+			GameUI.instance.ShowHomeUI();
 		}
 	}
 
-    public bool isInGame { get; set; }
+	public bool isInGame { get; set; }
 
 
 }
